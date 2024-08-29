@@ -1,0 +1,31 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: SAM Template for local API with Lambda functions
+
+Globals:
+  Api:
+    Cors:
+      AllowMethods: "'*'"
+      AllowHeaders: "'*'"
+      AllowOrigin: "'*'"
+
+Resources:
+  testLambdaEndpoint:
+    Type: AWS::Serverless::Function
+    Properties:
+      # Handler: main.lambda_handler
+      # Runtime: python3.9
+      # CodeUri: ./api/test-ep
+      PackageType: Image
+      Architectures:
+        - x86_64
+      Events:
+        ApiEndpointEvent:
+          Type: Api
+          Properties:
+            Path: /test-ep
+            Method: get
+    Metadata:
+      Dockerfile: ./api/test-ep/Dockerfile
+      DockerContext: .
+      DockerTag: python3.9-v1
