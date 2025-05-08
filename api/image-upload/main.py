@@ -14,16 +14,19 @@ def lambda_handler(event, _context):
     name, err = parse_body(event)
     if err is not None:
         return format_response(err)
+    
+    err = build_response(500, json.dumps({"error": "test"}))
+    return format_response(err)
 
-    conn, err = get_db_connection()
-    if err is not None:
-        return format_response(err)
+    # conn, err = get_db_connection()
+    # if err is not None:
+    #     return format_response(err)
 
-    user, err = queries.get_user(conn, name)
-    if err is not None:
-        return format_response(build_response(404, json.dumps({"error": err})))
+    # user, err = queries.get_user(conn, name)
+    # if err is not None:
+    #     return format_response(build_response(404, json.dumps({"error": err})))
 
-    return format_response(build_response(200, json.dumps({"user": user})))
+    # return format_response(build_response(200, json.dumps({"user": user})))
 
 def parse_body(event):
     err = None

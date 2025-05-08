@@ -29,3 +29,22 @@ Resources:
       Dockerfile: ./api/test-ep/Dockerfile
       DockerContext: .
       DockerTag: python3.9-v1
+  imageUploadEndpoint:
+    Type: AWS::Serverless::Function
+    Properties:
+      # Handler: main.lambda_handler
+      # Runtime: python3.9
+      # CodeUri: ./api/image-upload
+      PackageType: Image
+      Architectures:
+        - x86_64
+      Events:
+        ApiEndpointEvent:
+          Type: Api
+          Properties:
+            Path: /image-upload
+            Method: post
+    Metadata:
+      Dockerfile: ./api/image-upload/Dockerfile
+      DockerContext: .
+      DockerTag: python3.9-v1
